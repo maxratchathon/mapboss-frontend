@@ -1,6 +1,6 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { createUser } from "../api/services/useUser";
+import { createUser, deleteUser } from "../api/services/useUser";
 import { useEffect, useState } from "react";
 import { getUserById } from "../api/services/useUser";
 import { useRouter } from "next/router";
@@ -19,6 +19,7 @@ const UserPage = () => {
 
   const router = useRouter();
   const userId = router.query.userId as string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
@@ -36,8 +37,12 @@ const UserPage = () => {
     createUser(data);
   };
 
-  console.log("watch", watch());
-  console.log("user", user);
+  const handleDelete = () => {
+    if (userId) {
+      deleteUser(userId);
+      router.push("/");
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -90,11 +95,27 @@ const UserPage = () => {
           type="password"
           InputLabelProps={{ shrink: !!user?.password || !!watch("password") }}
         />
-        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: "1rem" }}>
-          <Button variant="outlined">Cancel</Button>
-          <Button variant="contained" type="submit">
-            Submit
-          </Button>
+        <Box
+          sx={{ display: "flex", justifyContent: "space-between", gap: "1rem" }}
+        >
+          {userId ? (
+            <Button
+              variant="outlined"
+              color="error"
+              hidden={false}
+              onClick={handleDelete}
+            >
+              Delete
+            </Button>
+          ) : null}
+          <Box
+            sx={{ display: "flex", justifyContent: "flex-end", gap: "1rem" }}
+          >
+            <Button variant="outlined">Cancel</Button>
+            <Button variant="contained" type="submit">
+              Submit
+            </Button>
+          </Box>
         </Box>
       </Box>
     </form>
