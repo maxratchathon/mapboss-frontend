@@ -13,7 +13,7 @@ export const getUsers = async () => {
 
 export const getUserById = async (id: string) => {
     try {
-        const response = await axios.get(`${USER_SEARCH_URL}/${id}`);
+        const response = await axios.get(`${USER_URL}/${id}`);
         return response.data;
     } catch (error) {
         throw new Error(`Error fetching user with ID ${id}: ${error}`);

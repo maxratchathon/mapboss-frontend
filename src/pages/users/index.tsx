@@ -1,9 +1,12 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { createUser } from "../api/services/useUser";
+import { useEffect, useState } from "react";
+import { getUserById } from "../api/services/useUser";
+import { useRouter } from "next/router";
 
 const UserPage = () => {
-  const { handleSubmit, control, reset, register } = useForm({
+  const { handleSubmit, reset, register, watch } = useForm({
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -14,11 +17,27 @@ const UserPage = () => {
     },
   });
 
+  const router = useRouter();
+  const userId = router.query.userId as string;
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    if (userId) {
+      getUserById(userId).then((userData) => {
+        reset(userData?.data);
+        setUser(userData?.data);
+      });
+    }
+  }, [userId, reset]);
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
     console.log("Form Data: (JSON)", data);
     createUser(data);
   };
+
+  console.log("watch", watch());
+  console.log("user", user);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
