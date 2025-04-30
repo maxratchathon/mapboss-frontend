@@ -1,14 +1,46 @@
 import Head from "next/head";
-import Image from "next/image";
-import { Geist, Geist_Mono } from "next/font/google";
-import styles from "@/styles/Home.module.css";
-import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import {
+  Box,
+  Button,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 import router from "next/router";
-import users from "./users";
-
-
+import { USER_SEARCH_URL } from "./api";
+import { TUserFecthing } from "./api/typeSchema";
 
 export default function Home() {
+  const [users, setUsers] = useState<TUserFecthing>();
+  console.log(users);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get(USER_SEARCH_URL);
+        setUsers(response.data);
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  // const handleDelete = async (userId: string) => {
+  //   try {
+  //     await axios.delete(
+  //       `https://training-mssql-expressjs.app.mapboss.co.th/user/${userId}`
+  //     );
+  //     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
+  //   } catch (error) {
+  //     console.error("Error deleting user:", error);
+  //   }
+  // };
+
   return (
     <>
       <Head>
@@ -17,8 +49,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box>
-        <Table>
+      <Box sx={{p: '2rem'}}>
+        <Table sx={{border: 0.5}}>
           <TableHead>
             <TableRow>
               <TableCell>First name</TableCell>
@@ -29,7 +61,7 @@ export default function Home() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((user) => (
+            {users?.data?.map((user) => (
               <TableRow key={user.id}>
                 <TableCell>{user.firstName}</TableCell>
                 <TableCell>{user.lastName}</TableCell>
