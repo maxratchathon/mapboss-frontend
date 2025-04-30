@@ -1,8 +1,25 @@
 import { Box, Button, TextField } from "@mui/material";
+import { useForm } from "react-hook-form";
 
 const UserPage = () => {
+  const { handleSubmit, control, reset, register } = useForm({
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      displayName: "",
+      username: "",
+      email: "",
+      password: "",
+    },
+  });
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const onSubmit = (data: any) => {
+    console.log("Form Data: (JSON)", data);
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Box
         sx={{
           padding: "2rem",
@@ -11,12 +28,12 @@ const UserPage = () => {
           gap: "1rem",
         }}
       >
-        <TextField label="First Name" required />
-        <TextField label="Last Name" required />
-        <TextField label="Display Name" required />
-        <TextField label="Username" required />
-        <TextField label="Email" required />
-        <TextField label="Password" required />
+        <TextField label="First Name" required {...register("firstName")} />
+        <TextField label="Last Name" required {...register("lastName")} />
+        <TextField label="Display Name" required {...register("displayName")} />
+        <TextField label="Username" required {...register("username")} />
+        <TextField label="Email" required {...register("email")} />
+        <TextField label="Password" required {...register("password")} />
         <Box sx={{ display: "flex", justifyContent: "flex-end", gap: "1rem" }}>
           <Button variant="outlined">Cancel</Button>
           <Button variant="contained" type="submit">
