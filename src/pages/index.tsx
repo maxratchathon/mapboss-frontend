@@ -14,6 +14,7 @@ import {
 import router from "next/router";
 import { USER_SEARCH_URL } from "./api";
 import { TUserFecthing } from "./api/typeSchema";
+import { deleteUser } from "./api/services/useUser";
 
 export default function Home() {
   const [users, setUsers] = useState<TUserFecthing>();
@@ -34,19 +35,12 @@ export default function Home() {
     fetchUsers();
   }, [search, url]);
 
-  // const handleDelete = async (userId: string) => {
-  //   try {
-  //     await axios.delete(
-  //       `https://training-mssql-expressjs.app.mapboss.co.th/user/${userId}`
-  //     );
-  //     setUsers((prevUsers) => prevUsers.filter((user) => user.id !== userId));
-  //   } catch (error) {
-  //     console.error("Error deleting user:", error);
-  //   }
-  // };
+  const handleDelete = async (id: string) => {
+    deleteUser(id);
+    router.reload();
+  };
 
   const onChangeSearchHandle = (value: string) => {
-    console.log(value);
     setSearch(value);
   };
 

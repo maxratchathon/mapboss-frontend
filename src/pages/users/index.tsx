@@ -49,16 +49,46 @@ const UserPage = () => {
           gap: "1rem",
         }}
       >
-        <TextField label="First Name" required {...register("firstName")} />
-        <TextField label="Last Name" required {...register("lastName")} />
-        <TextField label="Display Name" required {...register("displayName")} />
-        <TextField label="Username" required {...register("username")} />
-        <TextField label="Email" required {...register("email")} />
+        <TextField
+          label="First Name"
+          required
+          {...register("firstName")}
+          InputLabelProps={{
+            shrink: !!user?.firstName || !!watch("firstName"),
+          }}
+        />
+        <TextField
+          label="Last Name"
+          required
+          {...register("lastName")}
+          InputLabelProps={{ shrink: !!user?.lastName || !!watch("lastName") }}
+        />
+        <TextField
+          label="Display Name"
+          required
+          {...register("displayName")}
+          InputLabelProps={{
+            shrink: !!user?.displayName || !!watch("displayName"),
+          }}
+        />
+        <TextField
+          label="Username"
+          required
+          {...register("username")}
+          InputLabelProps={{ shrink: !!user?.username || !!watch("username") }}
+        />
+        <TextField
+          label="Email"
+          required
+          {...register("email")}
+          InputLabelProps={{ shrink: !!user?.email || !!watch("email") }}
+        />
         <TextField
           label="Password"
           required
           {...register("password")}
           type="password"
+          InputLabelProps={{ shrink: !!user?.password || !!watch("password") }}
         />
         <Box sx={{ display: "flex", justifyContent: "flex-end", gap: "1rem" }}>
           <Button variant="outlined">Cancel</Button>
