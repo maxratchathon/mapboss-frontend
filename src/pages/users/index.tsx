@@ -1,11 +1,9 @@
 import { Box, Button, TextField } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { createUser, deleteUser } from "../api/services/useUser";
+import { createUser, deleteUser, updateUser } from "../api/services/useUser";
 import { useEffect, useState } from "react";
 import { getUserById } from "../api/services/useUser";
 import { useRouter } from "next/router";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { userSchema } from "./schema";
 
 const UserPage = () => {
   const {
@@ -15,7 +13,6 @@ const UserPage = () => {
     watch,
     formState: { errors },
   } = useForm({
-    resolver: zodResolver(userSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -43,7 +40,11 @@ const UserPage = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onSubmit = (data: any) => {
     console.log("Form Data: (JSON)", data);
-    createUser(data);
+    if (!userId) {
+      createUser(data);
+    } else {
+      updateUser(userId, data);
+    }
     router.push("/");
   };
 
