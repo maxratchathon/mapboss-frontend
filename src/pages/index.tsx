@@ -18,12 +18,13 @@ import { TUserFecthing } from "./api/typeSchema";
 export default function Home() {
   const [users, setUsers] = useState<TUserFecthing>();
   const [search, setSearch] = useState<string>("");
+  const url = USER_SEARCH_URL + search;
 
   console.log(users);
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get(USER_SEARCH_URL);
+        const response = await axios.get(url);
         setUsers(response.data);
       } catch (error) {
         console.error("Error fetching users:", error);
@@ -31,7 +32,7 @@ export default function Home() {
     };
 
     fetchUsers();
-  }, []);
+  }, [search, url]);
 
   // const handleDelete = async (userId: string) => {
   //   try {
@@ -44,7 +45,7 @@ export default function Home() {
   //   }
   // };
 
-  const onChangeSearchHandle = (value) => {
+  const onChangeSearchHandle = (value: string) => {
     console.log(value);
     setSearch(value);
   };
@@ -58,11 +59,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box sx={{ p: "2rem" }}>
-        <TextField
-          label="Search User"
-          onChange={(event) => onChangeSearchHandle(event?.target.value)}
-        />
-        <Table sx={{ border: 0.5 }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+          <TextField
+            size="small"
+            label="Search User"
+            sx={{ minWidth: "20rem" }}
+            onChange={(event) => onChangeSearchHandle(event?.target.value)}
+          />
+          <Button variant="contained" onClick={() => router.push(`/users`)}>
+            Add User
+          </Button>
+        </Box>
+        <Table sx={{ border: 0.5, mt: "2rem" }}>
           <TableHead>
             <TableRow>
               <TableCell>First name</TableCell>
