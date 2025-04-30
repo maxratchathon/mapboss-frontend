@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { getUserById } from "../api/services/useUser";
 import { useRouter } from "next/router";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { userSchema } from "./schema";
 
 const UserPage = () => {
