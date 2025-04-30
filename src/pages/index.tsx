@@ -49,8 +49,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box sx={{p: '2rem'}}>
-        <Table sx={{border: 0.5}}>
+      <Box sx={{ p: "2rem" }}>
+        <Table sx={{ border: 0.5 }}>
           <TableHead>
             <TableRow>
               <TableCell>First name</TableCell>
@@ -68,10 +68,22 @@ export default function Home() {
                 <TableCell>{user.username}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>
-                  <Button onClick={() => router.push(`/users/${user.id}`)}>
-                    Edit
-                  </Button>
-                  <Button onClick={() => handleDelete(user.id)}>Delete</Button>
+                  <Box sx={{ gap: "2rem" }}>
+                    <Button
+                      sx={{mr: '1rem'}}
+                      variant="contained"
+                      onClick={() => router.push(`/users/${user.id}`)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={() => handleDelete(user.id)}
+                    >
+                      Delete
+                    </Button>
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}
