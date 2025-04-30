@@ -120,7 +120,11 @@ const UserPage = () => {
           InputLabelProps={{ shrink: !!user?.password || !!watch("password") }}
         />
         <Box
-          sx={{ display: "flex", justifyContent: "space-between", gap: "1rem" }}
+          sx={{
+            display: "flex",
+            justifyContent: userId ? "space-between" : "flex-end",
+            gap: "1rem",
+          }}
         >
           {userId ? (
             <Button
