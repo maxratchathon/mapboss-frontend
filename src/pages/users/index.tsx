@@ -4,9 +4,19 @@ import { createUser, deleteUser } from "../api/services/useUser";
 import { useEffect, useState } from "react";
 import { getUserById } from "../api/services/useUser";
 import { useRouter } from "next/router";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { userSchema } from "./schema";
 
 const UserPage = () => {
-  const { handleSubmit, reset, register, watch } = useForm({
+  const {
+    handleSubmit,
+    reset,
+    register,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(userSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -35,6 +45,7 @@ const UserPage = () => {
   const onSubmit = (data: any) => {
     console.log("Form Data: (JSON)", data);
     createUser(data);
+    router.push("/");
   };
 
   const handleDelete = () => {
@@ -58,6 +69,8 @@ const UserPage = () => {
           label="First Name"
           required
           {...register("firstName")}
+          error={!!errors.firstName}
+          helperText={errors.firstName?.message}
           InputLabelProps={{
             shrink: !!user?.firstName || !!watch("firstName"),
           }}
@@ -66,12 +79,16 @@ const UserPage = () => {
           label="Last Name"
           required
           {...register("lastName")}
+          error={!!errors.lastName}
+          helperText={errors.lastName?.message}
           InputLabelProps={{ shrink: !!user?.lastName || !!watch("lastName") }}
         />
         <TextField
           label="Display Name"
           required
           {...register("displayName")}
+          error={!!errors.displayName}
+          helperText={errors.displayName?.message}
           InputLabelProps={{
             shrink: !!user?.displayName || !!watch("displayName"),
           }}
@@ -80,12 +97,17 @@ const UserPage = () => {
           label="Username"
           required
           {...register("username")}
+          error={!!errors.username}
+          helperText={errors.username?.message}
           InputLabelProps={{ shrink: !!user?.username || !!watch("username") }}
         />
         <TextField
           label="Email"
           required
           {...register("email")}
+          type="email"
+          error={!!errors.email}
+          helperText={errors.email?.message}
           InputLabelProps={{ shrink: !!user?.email || !!watch("email") }}
         />
         <TextField
@@ -93,6 +115,8 @@ const UserPage = () => {
           required
           {...register("password")}
           type="password"
+          error={!!errors.password}
+          helperText={errors.password?.message}
           InputLabelProps={{ shrink: !!user?.password || !!watch("password") }}
         />
         <Box
@@ -111,7 +135,9 @@ const UserPage = () => {
           <Box
             sx={{ display: "flex", justifyContent: "flex-end", gap: "1rem" }}
           >
-            <Button variant="outlined">Cancel</Button>
+            <Button variant="outlined" onClick={() => router.push("/")}>
+              Cancel
+            </Button>
             <Button variant="contained" type="submit">
               Submit
             </Button>

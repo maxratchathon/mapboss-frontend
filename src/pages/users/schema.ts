@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const SearchSchema = z.object({
+export const userSchema = z.object({
     firstName: z.string().min(1, "Required"),
     lastName: z.string().min(1, "Required"),
     displayName: z.string().min(1, "Required"),

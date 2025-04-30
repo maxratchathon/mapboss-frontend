@@ -64,7 +64,13 @@ export default function Home() {
             Add User
           </Button>
         </Box>
-        <Table sx={{ border: 0.5, mt: "2rem" }}>
+        <Table
+          sx={{
+            mt: "2rem",
+            borderRadius: "15px",
+            boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.1)",
+          }}
+        >
           <TableHead>
             <TableRow>
               <TableCell>First name</TableCell>
