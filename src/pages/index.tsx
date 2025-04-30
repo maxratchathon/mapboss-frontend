@@ -9,6 +9,7 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  TextField,
 } from "@mui/material";
 import router from "next/router";
 import { USER_SEARCH_URL } from "./api";
@@ -16,6 +17,8 @@ import { TUserFecthing } from "./api/typeSchema";
 
 export default function Home() {
   const [users, setUsers] = useState<TUserFecthing>();
+  const [search, setSearch] = useState<string>("");
+
   console.log(users);
   useEffect(() => {
     const fetchUsers = async () => {
@@ -41,6 +44,11 @@ export default function Home() {
   //   }
   // };
 
+  const onChangeSearchHandle = (value) => {
+    console.log(value);
+    setSearch(value);
+  };
+
   return (
     <>
       <Head>
@@ -50,6 +58,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Box sx={{ p: "2rem" }}>
+        <TextField
+          label="Search User"
+          onChange={(event) => onChangeSearchHandle(event?.target.value)}
+        />
         <Table sx={{ border: 0.5 }}>
           <TableHead>
             <TableRow>
@@ -70,9 +82,9 @@ export default function Home() {
                 <TableCell>
                   <Box sx={{ gap: "2rem" }}>
                     <Button
-                      sx={{mr: '1rem'}}
+                      sx={{ mr: "1rem" }}
                       variant="contained"
-                      onClick={() => router.push(`/users/${user.id}`)}
+                      onClick={() => router.push(`/users?userId=${user.id}`)}
                     >
                       Edit
                     </Button>
