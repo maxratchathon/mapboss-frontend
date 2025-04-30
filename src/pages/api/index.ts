@@ -1,1 +1,2 @@
 export const USER_SEARCH_URL = "https://training-mssql-expressjs.app.mapboss.co.th/user/search?keyword=";
+export const USER_URL = "https://training-mssql-expressjs.app.mapboss.co.th/user";

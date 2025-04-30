@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from 'axios';
-import { USER_SEARCH_URL } from '..';
-
+import { USER_SEARCH_URL, USER_URL } from '..';
 
 export const getUsers = async () => {
     try {
@@ -22,7 +22,8 @@ export const getUserById = async (id: string) => {
 
 export const createUser = async (userData: any) => {
     try {
-        const response = await axios.post(API_URL, userData);
+        const response = await axios.post(USER_URL, userData);
+        alert('User created successfully!');
         return response.data;
     } catch (error) {
         throw new Error(`Error creating user: ${error}`);
@@ -31,7 +32,8 @@ export const createUser = async (userData: any) => {
 
 export const updateUser = async (id: string, userData: any) => {
     try {
-        const response = await axios.put(`${API_URL}/${id}`, userData);
+        const response = await axios.put(`${USER_URL}/${id}`, userData);
+        alert(`User with ID ${id} updated successfully!`);
         return response.data;
     } catch (error) {
         throw new Error(`Error updating user with ID ${id}: ${error}`);
@@ -40,7 +42,8 @@ export const updateUser = async (id: string, userData: any) => {
 
 export const deleteUser = async (id: string) => {
     try {
-        const response = await axios.delete(`${API_URL}/${id}`);
+        const response = await axios.delete(`${USER_URL}/${id}`);
+        alert(`User with ID ${id} deleted successfully!`);
         return response.data;
     } catch (error) {
         throw new Error(`Error deleting user with ID ${id}: ${error}`);
